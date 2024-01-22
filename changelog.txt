@@ -1,0 +1,68 @@
+Changelog
+
+1.0.7
+Added option "Mouse Click to Attack only" - If you don't want mouse clicks to trigger movement and only use keyboard to do so
+Mouse cursor now displays a "Attack Icon" when on top of Enemies, to help target a bit better
+Fixed glitch where only the first required Key on a Door was showed in the message
+Skills menu button (Spell Book) now shows closes/open image accordingly
+Pressing Mouse Wheel resets map zoom and centers around the player
+
+1.0.6.1
+Fixes crash when auto-pick is active and we run out of inventory space
+
+1.0.6
+Added an in game options menu (on Pause Menu)
+Added option for auto-loot when walking (in-game options)
+Added an Adventure log, displays some combat info (WIP) (in-game options)
+Decreased Tomes sell price
+Fixed stairs near doors (?)
+Fixed glitch on key binding were you could not set the already used key on same action.
+Tweaked Shaman abilities mana costs and cast chances
+Fixed Minimap close button getting out of place when rotating screen (iPad)
+
+1.0.5
+Added "Key Binding" option under Options on Start Menus
+Fixed issue with Doors Unlocked not showing up on Stats (Steam)
+
+1.0.4
+Tweaked loot drop to avoid Tomes drooping like crazy
+Fixed bug where some chests could require the final "Skull Key"
+Fixed bug where Graphic options could crash if it fails to detect resolutions (you can still select window/fullscreen this way)
+Fixed vanishing Equipment Bug when equipping with Right Click
+Food/Drink now shows recovery points in integer values (14HP instead of 14.0HP)
+Spell-book is how a bit taller and has some hover effects for easier navigation
+Illusions no longer affects hero if within radius
+Increased Patch Wound mana cost
+Current HP now displays in 3 different colors, Red < 20% health, Yellow < 40% health or White >=40% health
+If hero can't use a weapon the label will display the necessary Skill Requirement
+Fix issue were learning "Weapon Handling" while holding the type of weapon would not remove "Unprepared"
+
+
+1.0.3
+Fixes crashing bug when completing Quests (let me know if this still happens)
+Fixed empty Shopkeeper bug when using KB
+
+
+1.0.2
+
+Fixed crashed caused by bumping into Fountains
+Fixed reversed Abilities list/Keyboards Bindings
+Equipment Power now shows in integer numbers (internal math is intact)
+Bumping into shopkeepers with Keyboard opens the Store
+Can use bookshelves with Keyboard
+User position is displayed in red on Leaderboards
+Fixed issue of infinite “Key X Required” when using keyboard
+
+
+
+
+1.0.1
+
+Moving the cursor now highlights the tile under the mouse
+Tweaked game cursor to be easier to know where we are pointing
+Inventory/Store how highlights corresponding slot when cursor is over
+Keyboard can now open treasure chests
+Keyboard can now use Quest Stones/ Recovery Shrines
+Fixed some typos (thanks for the reports)
+Fixed bug where Purchasing Items would not count to Statistics
+Keys can be stacked

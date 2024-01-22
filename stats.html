@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <title>Quest of Dungeons - for Windows, Mac, Linux, iOS and Android</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="description" content="Quest of Dungeons is a roguelike game with pixel art made for Windows, Mac, Linux, Xbox One, iOS and Android"/>
+    <meta name="keywords" content="quest-of-dungeons roguelike turn-based ios iphone android mac windows game adventure zelda-like warrior wizard dungeon shaman xbox one" />
+    <meta property="og:title" content="Quest of Dungeons" />
+    <meta name="og:description" content="Quest of Dungeons is a roguelike game with pixel art made for Windows, Mac, Linux, Xbox One, iOS and Android"/>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-2728367-10', 'questofdungeons.com');
+	  ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+  <link rel="stylesheet" type="text/css" href="js/jquery.fancybox.css?v=2.1.5" media="screen" />
+  <link href='https://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8">
+  <link rel="shortcut icon" href="favicon.ico" />
+  </head>
+  <body>
+    <h1 id="logo" class="pixelfont">Quest of Dungeons</h1>
+    <div class="content" id="tagline">
+      <figure class="avatar-wrapper">
+      <a href="https://www.questofdungeons.com" class="avatar" style="background-image:imgs/icon.png">
+        <img src="imgs/icon.png" />
+      </a>
+      </figure>
+
+      <figure class="avatar-wrapper">LIVE STATS</figure>
+
+      <div id="stats_container">
+        <img src="imgs/ajax-loader.gif" />
+      </div>
+      <h5>(From Steam plays, no need to refresh page)</h5>
+     </div>
+
+    <div class="content" id="purchase">
+      <h2>Direct Purchase for Windows, Mac  &amp; Linux</h2>
+      <iframe width='550' height='264' scrolling='no' frameBorder='0' style='border:none;' src='https://www.humblebundle.com/store/product/questofdungeons/Qodkwo3'></iframe>
+      <p class="aside" >(Includes Steam Key)</p>
+    </div>
+    <div class="content">
+      <ul id="navigation">
+        <li><a href="mailto:questofdungeons@gmail.com">Contact</a></li>
+        <li><a href="faq.html" target="_blank">F.A.Q.</a></li>
+        <li><a href="https://www.upfallstudios.com/blog/">Dev Blog</a></li>
+        <li><a href="stats.html">Game Statistics</a></li>
+        </ul>
+
+      <p class="aside">
+        &bull; Created by <a href="https://www.upfallstudios.com">Upfall Studios</a>
+      &bull; twitter: <a href="https://www.twitter.com/DJ_Link">@DJ_Link</a> &bull;</p>
+    </div>
+    <div id="footer">
+      &bull;Quest of Dungeons&bull; <br>
+  <br/>
+  </div>
+  </body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <!-- Add fancyBox main JS and CSS files -->
+  <script type="text/javascript" src="js/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        load_stats();
+
+        setInterval(function() {
+            load_stats();
+        }, 1000 * 60 * 2); // where X is your every X minutes
+    });
+
+
+    function load_stats()
+    {
+        var jsonUrl = "get_stats.php";
+          $.getJSON(
+              jsonUrl,
+              function(json)
+              {
+                var html = "<table class=\"stats pixelfont\">";
+                for(var stat in json)
+                {
+                    var dataCopy = json[stat];
+                    html+="<tr><td>" + dataCopy['name'] + "</td><td>" + dataCopy['total'] + "</td></tr>";
+                    //console.log(dataCopy);
+                }
+
+                html+="</table>";
+
+                $('#stats_container').html(html);
+              }
+          );
+    }
+
+    </script>
+
+</html>
