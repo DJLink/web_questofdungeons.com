@@ -78,13 +78,26 @@
     {
       const apiUrl = "https://api.steampowered.com/ISteamUserStats/GetGlobalStatsForGame/V0001/?format=json";
       const appId = 270050;
-      const count = 15;
-
+      
       const statNames = [
         'LostGames', 'SoldItems', 'PurchasedItems', 'GoldCollected', 'MonstersKilled',
         'FoodConsumed', 'BrokenStuff', 'CompletedQuests', 'StepsTaken', 'TrapsTriggered',
         'BossKills', 'ChestsUnlocked', 'ChestsOpened', 'DoorsUnlocked', 'PlayedTime'
       ];
+
+      // Additional variable names from the PHP code
+      const additionalStatNames = [
+        'FinishEasy', 'FinishNormal', 'FinishHard', 'FinishHell',
+        'DeathsEasy', 'DeathsNormal', 'DeathsHard', 'DeathsHell',
+        'FinishAssassin', 'FinishWizard', 'FinishWarrior', 'FinishShaman', 'FinishNecrodancer',
+        'LostAssassin', 'LostWizard', 'LostWarrior', 'LostShaman', 'LostNecroDancer',
+        'NumGames',
+        'ChooseMansion', 'ChooseRackan', 'PressedDeathSign',
+        'ChooseWarrior', 'ChooseWizard', 'ChooseAssassin', 'ChooseShaman', 'ChooseNecrodancer',
+        'GhostKills', 'ChooseCustom', 'ChooseNecrodancer'
+      ];
+
+      const allstatNames = [...statNames, ...additionalStatNames];
 
       var stats_labels = [
           { 'name': 'Deaths' },
@@ -101,23 +114,49 @@
           { 'name': 'Chests Unlocked' },
           { 'name': 'Chests Open' },
           { 'name': 'Doors Unlocked' },
-          { 'name': 'Total Played Time' }
-          /*
+          { 'name': 'Total Played Time' },
           { 'name': 'Won game in Easy' },
           { 'name': 'Won game in Normal' },
-          { 'name': 'Won game in Hard' }*/
+          { 'name': 'Won game in Hard' },
+          { 'name': 'Won game in Hell' },
+          { 'name': 'Lost game in Easy' },
+          { 'name': 'Lost game in Normal' },
+          { 'name': 'Lost game in Hard' },
+          { 'name': 'Lost game in Hell' },
+          { 'name': 'Won game with Assassin' },
+          { 'name': 'Won game with Wizard' },
+          { 'name': 'Won game with Warrior' },
+          { 'name': 'Won game with Shaman' },
+          { 'name': 'Won game with Necrodancer' },
+          { 'name': 'Lost game with Assassin' },
+          { 'name': 'Lost game with Wizard' },
+          { 'name': 'Lost game with Warrior' },
+          { 'name': 'Lost game with Shaman' },
+          { 'name': 'Lost game with Necrodancer' },
+          { 'name': 'Games Started' },
+          { 'name': 'Choose Omphar Mansion' },
+          { 'name': 'Choose Rackan Mansion' },
+          { 'name': 'Pressed Death Sign' },
+          { 'name': 'Choose Warrior' },
+          { 'name': 'Choose Wizard' },
+          { 'name': 'Choose Assassin' },
+          { 'name': 'Choose Shaman' },
+          { 'name': 'Choose Necrodancer' },
+          { 'name': 'Ghost Kills' },
+          { 'name': 'Choose Custom Game' }
       ];
 
 
       try {
-          const response = await fetch(`${apiUrl}&appid=${appId}&count=${count}&${statNames.map((name, index) => `name[${index}]=${name}`).join('&')}`);
+          const response = await fetch(`${apiUrl}&appid=${appId}&count=${allstatNames.length}&${allstatNames.map((name, index) => `name[${index}]=${name}`).join('&')}`);
           const json = await response.json();
 
           var html = "<table class=\"stats pixelfont\">";
           
-          const stats = Array(stats_labels.length).fill({ total: 0 }).map((stat, idx) => 
+          const stats = Array(allstatNames.length-1).fill({ total: 0 }).map((stat, idx) => 
           {
-              var value = (json.response.globalstats[statNames[idx]]);
+              var value = (json.response.globalstats[allstatNames[idx]]);
+              
               if (value.total !== undefined) 
               {
                 value.total = idx == 14 ? secondsToTime(parseInt(value.total)) : parseInt(value.total);
