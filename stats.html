@@ -66,101 +66,35 @@
   <script type="text/javascript" src="js/jquery.fancybox.pack.js?v=2.1.5"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-        fetchStats();
+        load_stats();
+
         setInterval(function() {
-          fetchStats();
+            load_stats();
         }, 1000 * 60 * 2); // where X is your every X minutes
     });
 
 
-
-    async function fetchStats() 
+    function load_stats()
     {
-      const apiUrl = "https://api.steampowered.com/ISteamUserStats/GetGlobalStatsForGame/V0001/?format=json";
-      const appId = 270050;
-      const count = 15;
-
-      const statNames = [
-        'LostGames', 'SoldItems', 'PurchasedItems', 'GoldCollected', 'MonstersKilled',
-        'FoodConsumed', 'BrokenStuff', 'CompletedQuests', 'StepsTaken', 'TrapsTriggered',
-        'BossKills', 'ChestsUnlocked', 'ChestsOpened', 'DoorsUnlocked', 'PlayedTime'
-      ];
-
-      var stats_labels = [
-          { 'name': 'Deaths' },
-          { 'name': 'Items Sold' },
-          { 'name': 'Items Purchased' },
-          { 'name': 'Gold Collected' },
-          { 'name': 'Monsters Killed' },
-          { 'name': 'Food Consumed' },
-          { 'name': 'Stuff Broken' },
-          { 'name': 'Quests Completed' },
-          { 'name': 'Steps Taken' },
-          { 'name': 'Traps Triggered' },
-          { 'name': 'Boss Kills' },
-          { 'name': 'Chests Unlocked' },
-          { 'name': 'Chests Open' },
-          { 'name': 'Doors Unlocked' },
-          { 'name': 'Total Played Time' }
-          /*
-          { 'name': 'Won game in Easy' },
-          { 'name': 'Won game in Normal' },
-          { 'name': 'Won game in Hard' }*/
-      ];
-
-
-      try {
-          const response = await fetch(`${apiUrl}&appid=${appId}&count=${count}&${statNames.map((name, index) => `name[${index}]=${name}`).join('&')}`);
-          const json = await response.json();
-
-          var html = "<table class=\"stats pixelfont\">";
-          
-          const stats = Array(stats_labels.length).fill({ total: 0 }).map((stat, idx) => 
-          {
-              var value = (json.response.globalstats[statNames[idx]]);
-              if (value.total !== undefined) 
+        var jsonUrl = "get_stats.php.static";
+          $.getJSON(
+              jsonUrl,
+              function(json)
               {
-                value.total = idx == 14 ? secondsToTime(parseInt(value.total)) : parseInt(value.total);
+                var html = "<table class=\"stats pixelfont\">";
+                for(var stat in json)
+                {
+                    var dataCopy = json[stat];
+                    html+="<tr><td>" + dataCopy['name'] + "</td><td>" + dataCopy['total'] + "</td></tr>";
+                    //console.log(dataCopy);
+                }
+
+                html+="</table>";
+
+                $('#stats_container').html(html);
               }
-              html+="<tr><td>" + stats_labels[idx].name + "</td><td>" + value.total + "</td></tr>";
-              return stat;
-          });
-
-          html+="</table>";
-
-          $('#stats_container').html(html);
-
-      } catch (error) {
-          console.error("Error fetching stats:", error);
-      }
-  }
-
-  function secondsToTime(seconds) 
-  {
-    var years = Math.floor(seconds / (365 * 24 * 60 * 60));
-    var days = Math.floor((seconds % (365 * 24 * 60 * 60)) / (24 * 60 * 60));
-    var hours = Math.floor((seconds % (24 * 60 * 60)) / (60 * 60));
-    var minutes = Math.floor((seconds % (60 * 60)) / 60);
-
-    var result = '';
-    if (years > 0) {
-        result += years + ' years, ';
+          );
     }
-    if (days > 0) {
-        result += days + ' days, ';
-    }
-    if (hours > 0) {
-        result += hours + 'H';
-    }
-    if ((minutes > 0 || result === '') && years == 0) {
-        result += ', ' + minutes + 'M';
-    }
-
-    return result;
-  }
-
-
-
 
     </script>
 
